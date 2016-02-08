@@ -4,9 +4,9 @@
     This sketch interfaces a CH-92x series coin acceptor device.
     It waits for pulses on a digital input pit and then sends
     clear-text information accordingly through any output pin 
-    via SoftwareSerial.
+    via USB serial (or SoftwareSerial).
 
-    Copyright (C) 2014  
+    Copyright (C) 2014, 2015, 2016  
     by Jann Eike  Kruse,  Dimitris  Koukoulakis,  Manolis Britsolakis
 
     This program is free software: you can redistribute it and/or modify
@@ -60,11 +60,11 @@ enum timing
 enum cabling
   {
     STATUS_LED   = 2,  // You may connect the status LED here.         (ATtiny85 DIP pin 5 - TX+LED on Arduino)
-    PULSE_INPUT  = 3,  // Connect the coin acceptor's COIN output here.(ATtiny85 DIP pin 6 - RX+LED on Arduino)
+    PULSE_INPUT  = 12, // Connect the coin acceptor's COIN output here.(ATtiny85 DIP pin 6 - RX+LED on Arduino)
     SPEAKER      = 4,  // You may connect a beeper/speaker here.       (ATtiny85 DIP pin 7)
     SERIAL_RX    = 5,  // Serial data input from the other Arduino/PC. (ATtiny85 DIP pin 2)
     SERIAL_TX    = 6,  // Serial data output to the other Arduino/PC.  (ATtiny85 DIP pin 3)
-    ON_BOARD_LED = 13, // Most Arduino boards have LED here.           (default: Arduino pin 13)
+    ON_BOARD_LED = 0,  // Most Arduino boards have a LED on pin 13.    (default: Arduino pin 13)
   };
 
 
@@ -84,7 +84,7 @@ enum state
   };
 
 // Enable or disable debugging features here.
-const boolean DEBUG = false;
+const boolean USE_STATUS_LED = true;
 const boolean VERBOSE = false;
 
 //SoftwareSerial Serial(SERIAL_RX, SERIAL_TX); // Use software serial for compatibility with ATtiny85.
@@ -101,6 +101,7 @@ void reportError(int error) {
     default:
       beep(SPEAKER, 2000, 1000); // Beep for a second at 2kHz.
       if (VERBOSE) {Serial.print("Error: ");Serial.println(error);}
+       else Serial.println("ERR");
 
   };
 };
@@ -206,7 +207,7 @@ void loop() {
     //---------------------------------------------
     case LO:
     //ENTRY:
-      if (DEBUG) digitalWrite(STATUS_LED, LOW);
+      if (USE_STATUS_LED) digitalWrite(STATUS_LED, LOW);
       if (VERBOSE) Serial.println("L");
 
     // WAIT FOR EVENT:
@@ -248,7 +249,7 @@ void loop() {
     //---------------------------------------------
     case HI:
     //ENTRY:
-      if (DEBUG) digitalWrite(STATUS_LED, HIGH);
+      if (USE_STATUS_LED) digitalWrite(STATUS_LED, HIGH);
       if (VERBOSE) Serial.println("H");
 
     // WAIT FOR EVENT:
