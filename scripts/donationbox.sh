@@ -1,0 +1,14 @@
+#!/bin/bash
+# kiosh.sh - session creation
+
+id=`xinput -list | grep Edamak | sed -n 's/.*\(id=\)//p' | sed -n 's/\t.*//p'`
+
+/usr/bin/xset s off
+/usr/bin/xset -dpms
+/usr/bin/chromium-browser http://donationbox.pi/ --kiosk --incognito --touch-devices=$id
+/usr/bin/xset s on
+/usr/bin/xset +dpms
+/usr/bin/xinput set-int-prop "Edamak LG TS2009-F-USB" "Calibration" 32 27 2027 39 1977
+sleep 30
+#Turn on monitor
+./monitoron.sh
