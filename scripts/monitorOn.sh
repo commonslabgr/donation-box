@@ -9,4 +9,4 @@ echo "out" > /sys/class/gpio/gpio9/direction
 echo "1" > /sys/class/gpio/gpio9/value
 
 # Clean up
-echo "9" > /sys/class/gpio/unexport
+#echo "9" > /sys/class/gpio/unexport

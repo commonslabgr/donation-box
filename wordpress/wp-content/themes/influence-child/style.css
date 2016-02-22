@@ -1448,6 +1448,9 @@ body.page-template-templatestemplate-full-no-title-php #primary {
 }
 /* =The Slider
 ----------------------------------------------- */
+#under-masthead-slider {
+  display: none;
+}
 #under-masthead-slider .widget {
   margin-bottom: 0;
 }

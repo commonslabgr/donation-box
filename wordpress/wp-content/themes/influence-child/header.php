@@ -125,7 +125,11 @@ $(document).ready(function(){
         var SetProgressBar = function() {
         sum = parseFloat($('#totalamount').html());
         goal = parseFloat($('#goal').html());
-        percent = (sum/goal)*100;
+        if (sum == 0) {
+            percent = 0;
+        } else {
+            percent = (sum/goal)*100;
+        }
         document.getElementById('probar').setAttribute("data-pro-bar-percent", String(percent));
         document.getElementById('probar').style.width = String(percent)+"%";
         $('#percentvalue').html(parseFloat(percent).toFixed(2)+"%");        
@@ -182,7 +186,7 @@ $('#donationbutton').attr("disabled", "disabled");
 
         }
  
-        ws = new WebSocket("ws://donationbox.pi:8888/ws");
+        ws = new WebSocket("ws://donationbox:8888/ws");
         ws.onmessage = function(evt) {
             //logger(evt.data);
             if (evt.data == 'SUCCESS') {
