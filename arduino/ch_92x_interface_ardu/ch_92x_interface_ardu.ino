@@ -59,7 +59,7 @@ enum timing
 // Define here how the Arduino (or ATtiny) is connected.
 enum cabling
   {
-    STATUS_LED   = 2,  // You may connect the status LED here.         (ATtiny85 DIP pin 5 - TX+LED on Arduino)
+    STATUS_LED   = 13,  // You may connect the status LED here.         (ATtiny85 DIP pin 5 - TX+LED on Arduino)
     PULSE_INPUT  = 12, // Connect the coin acceptor's COIN output here.(ATtiny85 DIP pin 6 - RX+LED on Arduino)
     SPEAKER      = 4,  // You may connect a beeper/speaker here.       (ATtiny85 DIP pin 7)
     SERIAL_RX    = 5,  // Serial data input from the other Arduino/PC. (ATtiny85 DIP pin 2)
