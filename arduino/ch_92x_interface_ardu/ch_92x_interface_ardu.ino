@@ -37,10 +37,6 @@ v. 0.3RC    Basic features are there. Ready for release after some clean-up.
 
 */
 
-
-// coin   1c  2c  5c 10c 20c 50c 1€  2€
-// pulses 3   5   7   9  11  13  15  17
-
 //#include <SoftwareSerial.h>
 #include "notes.h"
 
@@ -51,7 +47,7 @@ const int   centPerPulse = 50;  // This many 1/100th of a currency unit are coun
 // Define here some timing constants according to the settings of the coin acceptor.
 enum timing
   {
-    T_MIN = 25,     // The PULSE_INPUT shourd be LOW or HIGH for at least this long, otherwise it's noise.
+    T_MIN = 15,     // The PULSE_INPUT shourd be LOW or HIGH for at least this long, otherwise it's noise.
     T_MAX = 150,    // The PULSE_INPUT shourd be LOW or HIGH for at most this long, otherwise it's not a pulse.
   };
 
@@ -59,12 +55,12 @@ enum timing
 // Define here how the Arduino (or ATtiny) is connected.
 enum cabling
   {
-    STATUS_LED   = 13,  // You may connect the status LED here.         (ATtiny85 DIP pin 5 - TX+LED on Arduino)
-    PULSE_INPUT  = 12, // Connect the coin acceptor's COIN output here.(ATtiny85 DIP pin 6 - RX+LED on Arduino)
-    SPEAKER      = 4,  // You may connect a beeper/speaker here.       (ATtiny85 DIP pin 7)
-    SERIAL_RX    = 5,  // Serial data input from the other Arduino/PC. (ATtiny85 DIP pin 2)
-    SERIAL_TX    = 6,  // Serial data output to the other Arduino/PC.  (ATtiny85 DIP pin 3)
-    ON_BOARD_LED = 0,  // Most Arduino boards have a LED on pin 13.    (default: Arduino pin 13)
+    STATUS_LED   = 13, // You may connect the status LED here.          (ATtiny85 DIP pin 5 - TX+LED on Arduino)
+    PULSE_INPUT  = 12, // Connect the coin acceptor's COIN output here. (ATtiny85 DIP pin 6 - RX+LED on Arduino)
+    SPEAKER      = 4,  // You may connect a beeper/speaker here.        (ATtiny85 DIP pin 7)
+    SERIAL_RX    = 5,  // Serial data input from the other Arduino/PC.  (ATtiny85 DIP pin 2)
+    SERIAL_TX    = 6,  // Serial data output to the other Arduino/PC.   (ATtiny85 DIP pin 3)
+    ON_BOARD_LED = 0,  // We use the on-board LED as status - see above.(default: Arduino pin 13)
   };
 
 
@@ -159,8 +155,8 @@ void loop() {
       pinMode(STATUS_LED,   OUTPUT);
       pinMode(SPEAKER,      OUTPUT);
       pinMode(PULSE_INPUT,  INPUT);
-//      digitalWrite(PULSE_INPUT, HIGH); // Activate internal pull-up resistor. (So it's HIGH if not connected.)
-      digitalWrite(PULSE_INPUT, LOW); // Dectivate internal pull-up resistor. (So it's not HIGH when idle.)
+      digitalWrite(PULSE_INPUT, HIGH); // Activate internal pull-up resistor. (So it's HIGH if not connected.)
+//      digitalWrite(PULSE_INPUT, LOW); // Dectivate internal pull-up resistor. (So it's not HIGH when idle.)
       digitalWrite(STATUS_LED, HIGH);  // Show, we're online...
 
     // WAIT FOR EVENT:
